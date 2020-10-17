@@ -151,17 +151,15 @@ class App extends React.Component {
                 </form>
               </div>
               <div className="col align-self-center text-alignment">
-                <img alt="gatito" src="https://cf.ltkcdn.net/gatos/images/orig/236641-1600x1030-etapas-desarrollo-gatitos.jpg" className="rounded-circle small-size"/>
-                <h1>Tiro Parabólico</h1>
+              <p className="text-alignment">{this.state.resultado}</p>
+              <div className="chart-size">
+                <canvas id="myChart"></canvas>
+              </div>
               </div>
             </div>
           </div>
           <br/>
           <br/>
-          <p>{this.state.resultado}</p>
-          <div className="chart-size">
-            <canvas id="myChart"></canvas>
-          </div>
       </div>
     );
   }
