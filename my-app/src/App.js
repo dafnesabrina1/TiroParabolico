@@ -7,10 +7,10 @@ window.onload = function() {
   new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ["Iteracion 1", "Iteracion 2", "Iteracion 3", "Iteracion 4", "Iteracion 5", "Iteracion 6", "Iteracion 7", "Iteracion 8", "Iteracion 9", "Iteracion 10", "Iteracion 11", "Iteracion 12"],
+      labels: [],
       datasets: [{
         label: "Angulo",
-        data: [10, 8, 6, 5, 12, 8, 16, 17, 6, 7, 6, 10],
+        data: [],
         borderWidth: 1
       }]
     }
@@ -88,8 +88,10 @@ class App extends React.Component {
       h0: 0,
       hf: 0,
       k: 0,
-      resultado: ""
-    })
+      resultado: "",
+      label: [],
+      data: []
+    }, () =>{this.graph()})
   }
 
   onClickSubmit() {
@@ -125,8 +127,7 @@ class App extends React.Component {
         arry.push(parseFloat(this.state.h0)+(voy*count)-(parseFloat(this.state.g)*(count**2))/2);
         count+=(tiempo/20);
       }
-      console.log(arrx);
-      console.log(arry);
+
       arrx.push(vx*count);
       arry.push(parseFloat(this.state.h0)+(voy*count)-(parseFloat(this.state.g)*(count**2))/2);
       this.setState({resultado:"x=100, angulo=" +presenteAngulo, label: arrx, data: arry}, ()=>{
