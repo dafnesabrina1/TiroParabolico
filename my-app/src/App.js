@@ -26,7 +26,9 @@ class App extends React.Component {
       h0: 0, 
       hf: 0, 
       k: 0,
-      resultado: ""
+      resultado: "",
+      label:[],
+      data: []
     };
     this.handleChangeGravedad = this.handleChangeGravedad.bind(this);
     this.handleChangeMasa = this.handleChangeMasa.bind(this);
@@ -36,6 +38,22 @@ class App extends React.Component {
     this.handleChangek = this.handleChangek.bind(this);
     this.onClickReset = this.onClickReset.bind(this);
     this.onClickSubmit = this.onClickSubmit.bind(this);
+    this.graph = this.graph.bind(this);
+  }
+
+  graph() {
+    var ctx = document.getElementById("myChart");
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: this.state.label,
+        datasets: [{
+          label: "Angulo",
+          data: this.state.data,
+          borderWidth: 1
+        }]
+      }
+    })
   }
 
   handleChangeGravedad(event) {
@@ -89,12 +107,32 @@ class App extends React.Component {
       let presenteAngulo = angulo
       let anteriorAngulo = angulo +0.5
       while (Math.abs(presenteAngulo-anteriorAngulo) >= 0.00005) {
+
         fAngulo= this.state.h0-this.state.hf+(this.state.l*Math.tan(presenteAngulo))-((this.state.m*this.state.g*(this.state.l**2))/(2*this.state.k)) * (1/Math.cos(presenteAngulo)**2)
         fPrimaAngulo = this.state.l*(1/Math.cos(presenteAngulo)**2)-(this.state.m*this.state.g*(this.state.l**2)*(1/Math.cos(presenteAngulo)**2)*Math.tan(presenteAngulo))/this.state.k
         anteriorAngulo = presenteAngulo
         presenteAngulo = presenteAngulo - (fAngulo/fPrimaAngulo)
       }
-      this.setState({resultado:"x=100, angulo=" +presenteAngulo});
+      let vx = Math.sqrt(this.state.k/this.state.m)*Math.cos(presenteAngulo);
+      let tiempo = this.state.l/(vx);
+      let voy = Math.sqrt(this.state.k/this.state.m)*Math.sin(presenteAngulo);
+      let arrx = [];
+      let count = 0;
+      let arry = [];
+      
+      while (Math.abs(tiempo-count) >= 0.0000005){
+        arrx.push(vx*count);
+        arry.push(parseFloat(this.state.h0)+(voy*count)-(parseFloat(this.state.g)*(count**2))/2);
+        count+=(tiempo/20);
+      }
+      console.log(arrx);
+      console.log(arry);
+      arrx.push(vx*count);
+      arry.push(parseFloat(this.state.h0)+(voy*count)-(parseFloat(this.state.g)*(count**2))/2);
+      this.setState({resultado:"x=100, angulo=" +presenteAngulo, label: arrx, data: arry}, ()=>{
+        this.graph();
+      });
+
     }
   }
 
