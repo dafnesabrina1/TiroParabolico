@@ -84,19 +84,17 @@ class App extends React.Component {
     } else {
       let angulo = Math.atan((this.state.hf-this.state.h0)/this.state.l)
       let fAngulo = this.state.h0-this.state.hf+(this.state.l*Math.tan(angulo))-((this.state.m*this.state.g*(this.state.l**2))/(2*this.state.k)) * (1/Math.cos(angulo)**2)
-      let fPrimaAngulo = 2*(1/Math.cos(angulo)**2)-(this.state.m*this.state.g*(this.state.l**2)*(1/Math.cos(angulo)**2)*Math.tan(angulo))/this.state.k
+      let fPrimaAngulo = this.state.l*(1/Math.cos(angulo)**2)-(this.state.m*this.state.g*(this.state.l**2)*(1/Math.cos(angulo)**2)*Math.tan(angulo))/this.state.k
       angulo = angulo - (fAngulo/fPrimaAngulo)
       let presenteAngulo = angulo
       let anteriorAngulo = angulo +0.5
-      while (Math.abs(presenteAngulo-anteriorAngulo) >= 0.0005 || Math.abs(anteriorAngulo-presenteAngulo) >= 0.0005){
+      while (Math.abs(presenteAngulo-anteriorAngulo) >= 0.00005) {
+        fAngulo= this.state.h0-this.state.hf+(this.state.l*Math.tan(presenteAngulo))-((this.state.m*this.state.g*(this.state.l**2))/(2*this.state.k)) * (1/Math.cos(presenteAngulo)**2)
+        fPrimaAngulo = this.state.l*(1/Math.cos(presenteAngulo)**2)-(this.state.m*this.state.g*(this.state.l**2)*(1/Math.cos(presenteAngulo)**2)*Math.tan(presenteAngulo))/this.state.k
         anteriorAngulo = presenteAngulo
-        angulo= Math.atan((this.state.hf-this.state.h0)/this.state.l)
-        fAngulo= this.state.h0-this.state.hf+(this.state.l*Math.tan(angulo))-((this.state.m*this.state.g*(this.state.l**2))/(2*this.state.k)) * (1/Math.cos(angulo)**2)
-        fPrimaAngulo = 2*(1/Math.cos(angulo)**2)-(this.state.m*this.state.g*(this.state.l**2)*(1/Math.cos(angulo)**2)*Math.tan(angulo))/this.state.k
-        angulo = angulo - (fAngulo/fPrimaAngulo)
-        presenteAngulo = angulo
+        presenteAngulo = presenteAngulo - (fAngulo/fPrimaAngulo)
       }
-      this.setState({resultado:"x=100, angulo=" +angulo});
+      this.setState({resultado:"x=100, angulo=" +presenteAngulo});
     }
   }
 
