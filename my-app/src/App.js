@@ -57,27 +57,69 @@ class App extends React.Component {
   }
 
   handleChangeGravedad(event) {
-    this.setState({g: event.target.value});
+    const re = /^-?\d*(\.\d+)?$/;
+    const re1 = /^-?\d*(\.)?$/;
+
+      if (event.target.value === '' || re.test(event.target.value) || re1.test(event.target.value)) {
+
+         this.setState({g: event.target.value})
+
+      }
   }
 
   handleChangeMasa(event) {
-    this.setState({m: event.target.value});
+    const re = /^-?\d*(\.\d+)?$/;
+    const re1 = /^-?\d*(\.)?$/;
+
+      if (event.target.value === '' || re.test(event.target.value) || re1.test(event.target.value)) {
+
+         this.setState({m: event.target.value})
+
+      }
   }
 
   handleChangel(event) {
-    this.setState({l: event.target.value});
+    const re = /^-?\d*(\.\d+)?$/;
+    const re1 = /^-?\d*(\.)?$/;
+
+      if (event.target.value === '' || re.test(event.target.value) || re1.test(event.target.value)) {
+
+         this.setState({l: event.target.value})
+
+      }
   }
 
   handleChangeh0(event) {
-    this.setState({h0: event.target.value});
+    const re = /^-?\d*(\.\d+)?$/;
+    const re1 = /^-?\d*(\.)?$/;
+
+      if (event.target.value === '' || re.test(event.target.value) || re1.test(event.target.value)) {
+
+         this.setState({h0: event.target.value})
+
+      }
   }
 
   handleChangehf(event) {
-    this.setState({hf: event.target.value});
+    const re = /^-?\d*(\.\d+)?$/;
+    const re1 = /^-?\d*(\.)?$/;
+
+      if (event.target.value === '' || re.test(event.target.value) || re1.test(event.target.value)) {
+
+         this.setState({hf: event.target.value})
+
+      }
   }
 
   handleChangek(event) {
-    this.setState({k: event.target.value});
+    const re = /^-?\d*(\.\d+)?$/;
+    const re1 = /^-?\d*(\.)?$/;
+
+      if (event.target.value === '' || re.test(event.target.value) || re1.test(event.target.value)) {
+
+         this.setState({k: event.target.value})
+
+      }
   }
 
   onClickReset() {
@@ -130,7 +172,7 @@ class App extends React.Component {
 
       arrx.push(vx*count);
       arry.push(parseFloat(this.state.h0)+(voy*count)-(parseFloat(this.state.g)*(count**2))/2);
-      this.setState({resultado:"x=100, angulo=" +presenteAngulo, label: arrx, data: arry}, ()=>{
+      this.setState({resultado:"x=100, angulo=" +(presenteAngulo*180)/Math.PI, label: arrx, data: arry}, ()=>{
         this.graph();
       });
 
